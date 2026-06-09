@@ -37,10 +37,14 @@ else
 fi
 
 echo "compiling $src ..."
-"$CXX" -O2 -o "$bin" "$src" || exit 1
+"$CXX" --std=c++23 -O2 -o "$bin" "$src" || exit 1
 echo
 
-bold=$'\e[1m'; green=$'\e[32m'; red=$'\e[31m'; dim=$'\e[2m'; rst=$'\e[0m'
+bold=$'\e[1m'
+green=$'\e[32m'
+red=$'\e[31m'
+dim=$'\e[2m'
+rst=$'\e[0m'
 
 for id in "${ids[@]}"; do
     f="$tests/$id.in"
@@ -56,7 +60,7 @@ for id in "${ids[@]}"; do
     "./$bin" <"$f" >/tmp/myout 2>/tmp/mylog
     rc=$?
     end=$(date +%s%N)
-    ms=$(( (end - start) / 1000000 ))
+    ms=$(((end - start) / 1000000))
 
     echo "${bold}=== test $id ===${rst}  ${dim}(${ms} ms, exit $rc)${rst}"
 

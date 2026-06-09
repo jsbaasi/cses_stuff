@@ -20,7 +20,7 @@ if [ -z "$CXX" ]; then
     fi
 fi
 
-"$CXX" -O2 -o "$bin" "$src" || exit 1
+"$CXX" -std=c++23 -O2 -o "$bin" "$src" || exit 1
 
 for f in "$tests"/*.in; do
     expected="${f%.in}.out"
