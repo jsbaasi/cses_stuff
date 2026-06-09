@@ -1,21 +1,11 @@
-'''
-so it seems the api is pretty blocked off shall
-we start with the problem open
-manually download test cases to download folder
-
-scripted:
-    create directory for this problem
-    pull zip folder into directory
-    inflate
-    extract testcases into tests folder
-    copy template to folder
-    build sol
-    run sol against tests
-
-manually submit to site
-'''
 import shutil as sh
 from pathlib import Path
+
+config = Path("config")
+if not config.is_file(): print("make config file"); exit(1)
+cm = {pair.split("=")[0]:pair.split("=")[1].strip("\"") for pair in config.read_text().strip().split("\n")}
+tests_zip = Path(f"{cm["downloads"]}/tests.zip")
+if not tests_zip.is_file(): print("download tests"); exit(1)
 
 id = int(input("enter id: "))
 root = Path(f"{id}")
@@ -26,9 +16,9 @@ except FileExistsError:
     print("directory already created")
 try:
     tests.mkdir()
-except:
+except FileExistsError:
     print("tests directory already created")
-sh.copy("/Users/jujhaarb/Downloads/tests.zip", tests)
+sh.copy(tests_zip, tests)
 sh.unpack_archive(tests / "tests.zip", tests)
 (tests/"tests.zip").unlink()
 sh.copy("template.cpp", root/"sol.cpp")

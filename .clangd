@@ -1,0 +1,9 @@
+# This repo uses native libstdc++ (g++), NOT the global emscripten/libc++ setup.
+# Override the inherited ~/.clangd emscripten compiler + sysroot flags.
+CompileFlags:
+  Compiler: /usr/bin/clang++
+  Remove:
+    - -isystem*
+    - -std=*
+  Add:
+    - -std=c++17
